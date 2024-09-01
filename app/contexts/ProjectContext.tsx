@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
 interface Project {
   id: string;
@@ -9,7 +9,8 @@ interface Project {
 
 interface ProjectContextType {
   projects: Project[];
-  addProject: (project: Omit<Project, 'id'>) => void;
+  addProject: (project: Omit<Project, 'id'>) => Promise<void>;
+  fetchProjects: () => Promise<void>;
 }
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
@@ -17,13 +18,30 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 export function ProjectProvider({ children }: { children: ReactNode }) {
   const [projects, setProjects] = useState<Project[]>([]);
 
-  const addProject = (project: Omit<Project, 'id'>) => {
-    const newProject = { ...project, id: Date.now().toString() };
-    setProjects([...projects, newProject]);
+  const fetchProjects = async () => {
+    const response = await fetch('/api/projects');
+    const data = await response.json();
+    setProjects(data);
   };
 
+  const addProject = async (project: Omit<Project, 'id'>) => {
+    const response = await fetch('/api/projects', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(project),
+    });
+    const newProject = await response.json();
+    setProjects(prevProjects => [...prevProjects, newProject]);
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   return (
-    <ProjectContext.Provider value={{ projects, addProject }}>
+    <ProjectContext.Provider value={{ projects, addProject, fetchProjects }}>
       {children}
     </ProjectContext.Provider>
   );

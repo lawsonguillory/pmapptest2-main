@@ -1,32 +1,25 @@
 import React from 'react';
-
-interface Project {
-  id: string;
-  projectNumber: string;
-  clientName: string;
-  projectType: string;
-}
-
-// This is a mock data array. In a real application, you would fetch this data from an API or database.
-const mockProjects: Project[] = [
-  { id: '1', projectNumber: 'P001', clientName: 'Acme Corp', projectType: 'Web Development' },
-  { id: '2', projectNumber: 'P002', clientName: 'TechStart', projectType: 'Mobile App' },
-  { id: '3', projectNumber: 'P003', clientName: 'InnovateCo', projectType: 'Consulting' },
-];
+import { useProjects } from '../contexts/ProjectContext';
 
 export default function ProjectList() {
+  const { projects } = useProjects();
+
   return (
-    <div className="bg-white shadow rounded p-4">
-      <h2 className="text-2xl font-bold mb-4">Project List</h2>
-      <ul>
-        {mockProjects.map((project) => (
-          <li key={project.id} className="mb-4 p-3 border rounded hover:bg-gray-100">
-            <h3 className="font-bold">{project.projectNumber}</h3>
-            <p>Client: {project.clientName}</p>
-            <p>Type: {project.projectType}</p>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <h2 className="text-2xl font-bold mb-4 text-indigo-600 dark:text-indigo-300">Project List</h2>
+      {projects.length === 0 ? (
+        <p className="text-gray-500 dark:text-gray-400">No projects added yet.</p>
+      ) : (
+        <ul className="space-y-4">
+          {projects.map((project) => (
+            <li key={project.id} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-md shadow transition-all duration-300 hover:shadow-md">
+              <h3 className="font-bold text-lg text-indigo-600 dark:text-indigo-300">{project.projectNumber}</h3>
+              <p className="text-gray-600 dark:text-gray-300">Client: {project.clientName}</p>
+              <p className="text-gray-600 dark:text-gray-300">Type: {project.projectType}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
