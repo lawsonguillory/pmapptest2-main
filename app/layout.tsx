@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
+import { ProjectProvider } from './contexts/ProjectContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <ProjectProvider children={undefined}>{children}</ProjectProvider>
       </body>
     </html>
   );
 }
-
-// Note: The 'ai' package has been installed via npm.
-// If you need to use it in this file, you can import it at the top of the file.
-// For example: import { useChat } from 'ai/react';
