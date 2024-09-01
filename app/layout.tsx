@@ -1,10 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ProjectProvider } from './contexts/ProjectContext';
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AutoPM - Project Management Assistant",
@@ -18,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <ProjectProvider>{children}</ProjectProvider>
       </body>
     </html>

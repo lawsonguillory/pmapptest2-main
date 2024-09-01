@@ -1,5 +1,8 @@
 import React from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+interface ProvidersProps {
+  children: ReactNode;
 }
+
+// ... rest of the file
