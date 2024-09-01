@@ -10,14 +10,14 @@ export default function Home() {
         <p className="text-xl">Your AI-powered Project Management Assistant</p>
       </header>
 
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-4xl space-y-8">
         <ProjectForm />
         <ProjectList />
       </div>
 
       <footer className="w-full text-center mt-8">
         <p className="text-sm text-gray-500">
-          © 2023 AutoPM. All rights reserved.
+          © {new Date().getFullYear()} AutoPM. All rights reserved.
         </p>
       </footer>
     </main>
